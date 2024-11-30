@@ -1,25 +1,30 @@
 package com.dashboardservice.dashboard_service.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProblemTopic {
-
     @Id
     @GeneratedValue
-    @UuidGenerator // Generates UUID for the primary key
+    @UuidGenerator
     private UUID id;
 
-    @Column(nullable = false, unique = true) // Topic name must be unique and non-null
-    private String topicName;
+    @Column(nullable = false)
+    private String problemTopicName;
 
-    @Column(columnDefinition = "TEXT") // Allows longer descriptions
-    private String topicDescription;
+    @Column(nullable = false)
+    private String problemTopicDescription;
+
+    @OneToMany(mappedBy = "problemTopic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Problem> problemsList;
 }
