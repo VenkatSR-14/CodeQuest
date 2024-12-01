@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ProblemTopicService {
     public List<ProblemTopicDto> getAllProblemTopics();
-
+    public ProblemTopicDto insertProblemTopic(ProblemTopicDto problemTopicDto);
 }

@@ -18,12 +18,12 @@ class ProblemTopicRepositoryTest {
     @Test
     void testSaveAndFindAll() {
         ProblemTopic topic1 = new ProblemTopic();
-        topic1.setTopicName("Arrays");
-        topic1.setTopicDescription("Array-related problems");
+        topic1.setProblemTopicName("Arrays");
+        topic1.setProblemTopicDescription("Array-related problems");
 
         ProblemTopic topic2 = new ProblemTopic();
-        topic2.setTopicName("Strings");
-        topic2.setTopicDescription("String manipulation problems");
+        topic2.setProblemTopicName("Strings");
+        topic2.setProblemTopicDescription("String manipulation problems");
 
         repository.save(topic1);
         repository.save(topic2);

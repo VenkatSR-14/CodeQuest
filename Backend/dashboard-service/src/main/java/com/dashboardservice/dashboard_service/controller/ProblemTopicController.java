@@ -2,9 +2,11 @@ package com.dashboardservice.dashboard_service.controller;
 
 import com.dashboardservice.dashboard_service.dto.ProblemTopicDto;
 import com.dashboardservice.dashboard_service.service.interfaces.ProblemTopicService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +22,11 @@ public class ProblemTopicController {
     @GetMapping
     public List<ProblemTopicDto> getAllProblemTopics() {
         return problemTopicService.getAllProblemTopics();
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<ProblemTopicDto> InsertProblemTopic(@Valid @RequestBody ProblemTopicDto problemTopicDto){
+        ProblemTopicDto response = problemTopicService.insertProblemTopic(problemTopicDto);
+        return new ResponseEntity<ProblemTopicDto>(response, HttpStatus.CREATED);
     }
 }

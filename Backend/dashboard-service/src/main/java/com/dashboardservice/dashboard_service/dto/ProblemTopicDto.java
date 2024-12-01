@@ -8,6 +8,6 @@ import lombok.Data;
 public class ProblemTopicDto {
     @NotBlank (message = "Topic name can't be blank")
     private String problemTopicName;
+    @NotBlank(message = "Topic description must not be blank")
     private String topicDescription;
-    private int totalProblems;
 }

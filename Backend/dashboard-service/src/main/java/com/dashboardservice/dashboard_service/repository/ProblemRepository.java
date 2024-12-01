@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,14 +20,18 @@ public interface ProblemRepository extends JpaRepository<Problem, UUID> {
      * @param problemName the name of the problem.
      * @return the Problem entity matching the given name.
      */
-    public Problem findProblemByName(String problemName);
+    Problem findProblemByProblemName(String problemName);
     /**
      * Find problems by topic name with pagination to limit results.
      *
-     * @param topicName the name of the topic to filter by.
+     * @param topicNames the name of the topic to filter by.
      * @param pageable  the Pageable object to limit the number of results.
      * @return a list of Problem entities matching the topic name.
      */
-    @Query("SELECT p from PROBLEM p WHERE p.problemTopic.problemTopicName IN :topicNames")
-    public List<Problem> findProblemByTopicName(List<String> topicName, Pageable pageable);
+    @Query(value = "SELECT p FROM Problem p WHERE p.problemTopic.problemTopicName IN :topicNames",
+            countQuery = "SELECT COUNT(p.id) FROM Problem p WHERE p.problemTopic.problemTopicName IN :topicNames")
+    Page<Problem> findProblemsByTopicNames(@Param("topicNames") List<String> topicNames, Pageable pageable);
+
+
+
 }

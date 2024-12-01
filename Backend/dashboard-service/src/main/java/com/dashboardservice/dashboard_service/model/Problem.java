@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Problem {
     @Id
     @UuidGenerator
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO) // Use AUTO for UUID generation
     private UUID id;
 
     @Column(nullable = false)

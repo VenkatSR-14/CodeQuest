@@ -5,6 +5,7 @@ import com.dashboardservice.dashboard_service.model.Problem;
 import com.dashboardservice.dashboard_service.repository.ProblemRepository;
 import com.dashboardservice.dashboard_service.service.interfaces.ProblemService;
 import com.dashboardservice.dashboard_service.service.mapper.ProblemMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public List<ProblemDto> getAllProblemsBelongingToTopics(List<String> topicNames, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
-        List<Problem> problemList = problemRepository.findProblemByTopicName(topicNames, pageable);
-        return problemList.stream()
-                .map(problemMapper::toDto)
-                .collect(Collectors.toList());
+        Page<Problem> problemsPage = problemRepository.findProblemsByTopicNames(topicNames, pageable);
+        return problemsPage.getContent().stream().map(problemMapper::toDto).collect(Collectors.toList());
     }
 }
