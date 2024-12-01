@@ -35,11 +35,13 @@ public class ProblemController {
             @RequestParam(name = "limit", required = false, defaultValue = "5") int limit
 
     ){
-        // If nothing is chosen, then give random problems
-        if (topics == null || topics.isEmpty()){
+        if (topics == null || topics.isEmpty()) {
             List<ProblemTopicDto> problemTopics = problemTopicService.getAllProblemTopics();
+            if (problemTopics.isEmpty()) {
+                return List.of(); // Return an empty list if no topics are available
+            }
             List<String> topicList = problemTopics.stream()
-                    .map(ProblemTopicDto::getTopicName)
+                    .map(ProblemTopicDto::getProblemTopicName) // Ensure field matches the DTO definition
                     .collect(Collectors.toList());
             return problemService.getAllProblemsBelongingToTopics(topicList, limit);
         }
