@@ -19,15 +19,15 @@ public class ProblemMapper {
         return modelMapper.map(problem, ProblemDto.class);
     }
 
-
-    public ProblemTopicDto toDto(ProblemTopic problemtopic){
-        return modelMapper.map(problemtopic, ProblemTopicDto.class);
+    public Problem toEntity(ProblemDto problemDto, ProblemTopic problemTopic){
+        Problem problem = modelMapper.map(problemDto, Problem.class);
+        problem.setProblemTopic(problemTopic); // Set the resolved ProblemTopic
+        return problem;
     }
 
-    public Problem toEntity(ProblemDto problemDto){
-        return modelMapper.map(problemDto, Problem.class);
+    public ProblemTopicDto toDto(ProblemTopic problemTopic){
+        return modelMapper.map(problemTopic, ProblemTopicDto.class);
     }
-
 
     public ProblemTopic toEntity(ProblemTopicDto problemTopicDto){
         return modelMapper.map(problemTopicDto, ProblemTopic.class);

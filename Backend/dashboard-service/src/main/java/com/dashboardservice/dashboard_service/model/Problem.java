@@ -36,4 +36,5 @@ public class Problem {
     @ManyToOne
     @JoinColumn(name = "problemTopicId", nullable = false, foreignKey = @ForeignKey(name = "fk_problem_topic"))
     private ProblemTopic problemTopic;
+
 }

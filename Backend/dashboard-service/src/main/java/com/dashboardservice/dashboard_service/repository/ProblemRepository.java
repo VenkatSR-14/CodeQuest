@@ -28,9 +28,10 @@ public interface ProblemRepository extends JpaRepository<Problem, UUID> {
      * @param pageable  the Pageable object to limit the number of results.
      * @return a list of Problem entities matching the topic name.
      */
-    @Query(value = "SELECT p FROM Problem p WHERE p.problemTopic.problemTopicName IN :topicNames",
-            countQuery = "SELECT COUNT(p.id) FROM Problem p WHERE p.problemTopic.problemTopicName IN :topicNames")
+    @Query(value = "SELECT p FROM Problem p WHERE LOWER(p.problemTopic.problemTopicName) IN :topicNames",
+            countQuery = "SELECT COUNT(p.id) FROM Problem p WHERE LOWER(p.problemTopic.problemTopicName) IN :topicNames")
     Page<Problem> findProblemsByTopicNames(@Param("topicNames") List<String> topicNames, Pageable pageable);
+
 
 
 
