@@ -12,4 +12,5 @@ public interface ProblemService {
     public List<ProblemDto> getAllProblems();
 
     public List<ProblemDto> getAllProblemsBelongingToTopics(List<String> topicNames, int limit);
+
 }
