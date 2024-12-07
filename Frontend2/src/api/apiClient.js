@@ -2,7 +2,7 @@ import axios from 'axios';
 import { isTokenValid } from '../utils/tokenUtils';
 import { getNavigateFunction } from '../utils/navigationUtil';
 
-const BASE_URL = 'http://localhost:8081/api/users';
+const BASE_URL = 'http://localhost:8081/api';
 
 const apiClient = axios.create({
   headers: {
