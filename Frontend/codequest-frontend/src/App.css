@@ -41,6 +41,7 @@
 }
 
 .Intro-Banner{
+  padding-top: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
   max-width: 80%; /* Limit content width to fit smaller screens */
@@ -53,7 +54,6 @@
 .Register-Button{
   padding: 1em;
   max-width: 20%;
-  border: yellowgreen;
   fill: #61dafb;
   max-height: 10%;
 }
