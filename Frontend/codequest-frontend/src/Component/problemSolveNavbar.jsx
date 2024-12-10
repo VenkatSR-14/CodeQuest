@@ -1,14 +1,12 @@
-import React from 'react';
-import 'tailwindcss/tailwind.css';
-import CodeEditor from '../Component/CodeEditor';
-
-
+import React from "react";
+import "tailwindcss/tailwind.css";
+import CodeEditor from "../Component/CodeEditor";
 
 const navigation = [
-    { name: "Problem Set", href: "#" },
-    { name: "Interview", href: "#" },
-    { name: "Study", href: "#" },
-  ];
+  { name: "Problem Set", href: "#" },
+  { name: "Interview", href: "#" },
+  { name: "Study", href: "#" },
+];
 
 // const ProblemPage = () => {
 //   return (
@@ -76,48 +74,41 @@ const navigation = [
 
 // export default ProblemPage;
 
-const ProblemPage = () => {
-    return (
-        <div className="max-h-screen flex items-center justify-between p-6 lg:px-8 bg-indigo-600">
-  {/* First element on the left */}
-  <span className="font-bold text-2xl text-white">CodeQuest</span>
+const ProblemSolveNavbar = () => {
+  return (
+    <div className="max-h-screen flex items-center justify-between p-3 lg:px-8 bg-indigo-600">
+      {/* First element on the left */}
+      <span className="font-bold text-2xl text-white">CodeQuest</span>
 
-  {/* Second element in the center */}
-  <div className="hidden lg:flex lg:gap-x-12 text-gray-100">
-    {navigation.map((item) => (
-      <a
-        key={item.name}
-        href={item.href}
-        className="text-sm font-semibold text-white"
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
+      {/* Second element in the center */}
+      <div className="hidden lg:flex lg:gap-x-12 text-gray-100">
+        {navigation.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="text-sm font-semibold text-white"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
 
-  {/* Last elements on the right with spacing */}
-  <div className="flex items-center space-x-4">
-    <div className="relative rounded-full px-3 py-1 text-sm text-white ring-1 ring-white hover:bg-indigo-600 hover:ring-white">
-      <a
-        href="/register"
-        className="font-semibold text-white"
-      >
-        Register <span aria-hidden="true">&rarr;</span>
-      </a>
+      {/* Last elements on the right with spacing */}
+      <div className="flex items-center space-x-4">
+        <div className="relative rounded-full px-3 py-1 text-sm text-white ring-1 ring-white hover:bg-indigo-600 hover:ring-white">
+          <a href="/register" className="font-semibold text-white">
+            Register <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+        <div className="relative rounded-full px-3 py-1 text-sm text-white ring-1 ring-white hover:bg-indigo-600 hover:ring-white">
+          <a href="/login" className="font-semibold text-white">
+            Login <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
     </div>
-    <div className="relative rounded-full px-3 py-1 text-sm text-white ring-1 ring-white hover:bg-indigo-600 hover:ring-white">
-      <a
-        href="/login"
-        className="font-semibold text-white"
-      >
-        Login <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </div>
-</div>
+    
+  );
+};
 
-            
-    )
-}
-
-export default ProblemPage
+export default ProblemSolveNavbar;

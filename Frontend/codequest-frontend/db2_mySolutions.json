@@ -1,0 +1,26 @@
+{
+    "mySolutions": [
+      {
+        "id": "1",
+        "problemId": "1",
+        "author": "User123",
+        "solution": "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n}",
+        "timestamp": "2024-12-10T09:30:00Z"
+      },
+      {
+        "id": "2",
+        "problemId": "2",
+        "author": "User123",
+        "solution": "function reverseString(s) {\n  let left = 0, right = s.length - 1;\n  while (left < right) {\n    [s[left], s[right]] = [s[right], s[left]];\n    left++;\n    right--;\n  }\n}",
+        "timestamp": "2024-12-10T10:30:00Z"
+      },
+      {
+        "id": "3",
+        "problemId": "3",
+        "author": "User123",
+        "solution": "function isPalindrome(x) {\n  if (x < 0) return false;\n  const str = x.toString();\n  let left = 0, right = str.length - 1;\n  while (left < right) {\n    if (str[left] !== str[right]) return false;\n    left++;\n    right--;\n  }\n  return true;\n}",
+        "timestamp": "2024-12-10T11:30:00Z"
+      }
+    ]
+  }
+  

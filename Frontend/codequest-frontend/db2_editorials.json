@@ -1,0 +1,28 @@
+{
+    "editorials": [
+      {
+        "id": "1",
+        "problemId": "1",
+        "title": "Two Sum Editorial",
+        "author": "Admin",
+        "content": "The optimal solution to the Two Sum problem involves using a hash map to store the indices of numbers as you iterate through the array. This approach provides an O(n) solution.",
+        "timestamp": "2024-12-10T09:00:00Z"
+      },
+      {
+        "id": "2",
+        "problemId": "2",
+        "title": "Reverse String Editorial",
+        "author": "Admin",
+        "content": "Reversing a string in-place involves using two pointers, one starting at the beginning and the other at the end of the array, and swapping their values until they meet in the middle.",
+        "timestamp": "2024-12-10T10:00:00Z"
+      },
+      {
+        "id": "3",
+        "problemId": "3",
+        "title": "Palindrome Number Editorial",
+        "author": "Admin",
+        "content": "To check if a number is a palindrome, compare the digits from the ends toward the center. Negative numbers are not palindromes due to the '-' sign.",
+        "timestamp": "2024-12-10T11:00:00Z"
+      }
+    ]
+  }

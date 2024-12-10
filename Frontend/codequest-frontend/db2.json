@@ -1,0 +1,51 @@
+{
+  "discussions": [
+    {
+      "id": "1",
+      "problemId": "1",
+      "title": "Optimized Approach for Two Sum",
+      "author": "User123",
+      "content": "Has anyone found an efficient way to solve this problem in O(n) time?",
+      "comments": [
+        {
+          "author": "DevGuy",
+          "content": "Yes, you can use a hash map to store the complements.",
+          "timestamp": "2024-12-10T10:00:00Z"
+        },
+        {
+          "author": "CodeMaster",
+          "content": "I used a brute force approach and it works, but it's O(n^2).",
+          "timestamp": "2024-12-10T10:05:00Z"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "problemId": "2",
+      "title": "Reversing Strings in Place",
+      "author": "CodeNinja",
+      "content": "Is reversing in place always optimal for this problem?",
+      "comments": [
+        {
+          "author": "DataLover",
+          "content": "Yes, in-place reversal saves memory but might be slower on large strings.",
+          "timestamp": "2024-12-10T11:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "problemId": "3",
+      "title": "Understanding Palindrome Logic",
+      "author": "AlgoLearner",
+      "content": "How do you handle negative numbers for this problem?",
+      "comments": [
+        {
+          "author": "BugFinder",
+          "content": "Negative numbers are not palindromes as the '-' is not mirrored.",
+          "timestamp": "2024-12-10T12:00:00Z"
+        }
+      ]
+    }
+  ]
+}
