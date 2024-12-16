@@ -39,6 +39,12 @@ const ProblemDescriptionPart = () => {
               <pre className="bg-gray-50 p-4 rounded-md text-sm border border-gray-200">
                 {problemDescription.example}
               </pre>
+              <div className="mt-4 text-left">
+                <span className="text-gray-800 font-bold"> Contsraints</span>
+              <pre className="bg-gray-50 p-4 rounded-md text-sm border border-gray-200">
+                {problemDescription.constraints}
+              </pre>
+              </div>
             </>
           ) : (
             <p className="text-gray-500">Loading problem description...</p>
