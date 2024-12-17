@@ -1,9 +1,8 @@
 package com.example.interview_service.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "problems") // Table name should be lowercase as a best practice
-@Data
 public class Problem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -31,32 +30,104 @@ public class Problem {
     private String constraints;
 
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Discussion> discussions = new ArrayList<>(); // Initialize to prevent NullPointerException
+    private List<Discussion> discussions = new ArrayList<>();
 
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Solution> solutions = new ArrayList<>(); // Initialize to prevent NullPointerException
+    private List<Solution> solutions = new ArrayList<>();
 
-    // Add discussion to the list
+    // Getters and Setters
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(String constraints) {
+        this.constraints = constraints;
+    }
+
+    public List<Discussion> getDiscussions() {
+        return discussions;
+    }
+
+    public void setDiscussions(List<Discussion> discussions) {
+        this.discussions = discussions;
+    }
+
+    public List<Solution> getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(List<Solution> solutions) {
+        this.solutions = solutions;
+    }
+
+    // Utility methods for managing bidirectional relationships
+
     public void addDiscussion(Discussion discussion) {
-        discussions.add(discussion);
-        discussion.setProblem(this);
+        if (!discussions.contains(discussion)) {
+            discussions.add(discussion);
+            discussion.setProblem(this);
+        }
     }
 
-    // Remove discussion from the list
     public void removeDiscussion(Discussion discussion) {
-        discussions.remove(discussion);
-        discussion.setProblem(null);
+        if (discussions.contains(discussion)) {
+            discussions.remove(discussion);
+            discussion.setProblem(null);
+        }
     }
 
-    // Add solution to the list
     public void addSolution(Solution solution) {
-        solutions.add(solution);
-        solution.setProblem(this);
+        if (!solutions.contains(solution)) {
+            solutions.add(solution);
+            solution.setProblem(this);
+        }
     }
 
-    // Remove solution from the list
     public void removeSolution(Solution solution) {
-        solutions.remove(solution);
-        solution.setProblem(null);
+        if (solutions.contains(solution)) {
+            solutions.remove(solution);
+            solution.setProblem(null);
+        }
     }
 }

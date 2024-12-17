@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+
 @Entity(name = "Solutions")
 public class Solution {
     @Id
@@ -25,4 +25,29 @@ public class Solution {
     @ManyToOne
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
+
+    // Getters and setters
+
+
+    public void setContent(String content){
+        this.content = content;
+    }
+
+    public String getContent(){
+        return this.content;
+    }
+
+    public void setAuthor(String author){
+        this.author = author;
+    }
+    public String getAuthor(){
+        return this.author;
+    }
+    public void setProblem(Problem problem){
+        this.problem = problem;
+    }
+
+    public Problem getProblem(){
+        return this.problem;
+    }
 }

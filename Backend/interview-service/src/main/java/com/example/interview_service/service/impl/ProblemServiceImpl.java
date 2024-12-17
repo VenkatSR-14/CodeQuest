@@ -20,6 +20,7 @@ public class ProblemServiceImpl implements IProblemService {
     private final ProblemRepository problemRepository;
     private final ProblemMapper problemMapper;
 
+
     @Override
     @Async
     public CompletableFuture<List<Problem>> getAllProblems(){
@@ -29,27 +30,29 @@ public class ProblemServiceImpl implements IProblemService {
 
     @Override
     @Async
-    public CompletableFuture<List<ProblemDto>> getRandomProblems(int n){
-        return this.getAllProblems()
-                .thenApply(problems -> {
-                    return new Random()
-                            .ints(0, problems.size())
-                            .distinct()
-                            .limit(n)
-                            .mapToObj(problems::get)
-                            .map(problemMapper::problemToProblemDto) //MapToDto
-                            .collect(Collectors.toList());
-                });
+    public CompletableFuture<List<ProblemDto>> getRandomProblems(int n) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Problem> problems = problemRepository.findAll();
+            return new Random()
+                    .ints(0, problems.size())
+                    .distinct()
+                    .limit(n)
+                    .mapToObj(problems::get)
+                    .map(problemMapper::problemToProblemDto)
+                    .toList();
+        });
     }
 
-    public CompletableFuture<List<ProblemDto>> getProblemsByTopics(int n, List<String> topics){
-        List<Problem> problems = problemRepository.findByTopicIn(topics);
-        List<ProblemDto> result = problems.stream()
-                .limit(n)
-                .map(problemMapper::problemToProblemDto)
-                .collect(Collectors.toList());
-        return CompletableFuture.completedFuture(result);
-
-
+    @Override
+    public CompletableFuture<List<ProblemDto>> getProblemsByTopics(int n, List<String> topics) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Problem> problems = problemRepository.findByTopicIn(topics);
+            return problems.stream()
+                    .limit(n)
+                    .map(problemMapper::problemToProblemDto)
+                    .toList();
+        });
     }
+
+
 }

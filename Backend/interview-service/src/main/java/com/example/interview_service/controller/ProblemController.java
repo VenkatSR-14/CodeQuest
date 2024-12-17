@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/problems") // Base path for the endpoints
-@RequiredArgsConstructor
-public class ProblemController {
+@RequestMapping("api/problems") // Base path for the endpoints
 
+public class ProblemController {
     private final IProblemService problemService;
 
+    public ProblemController(IProblemService problemService) {
+        this.problemService = problemService;
+    }
     /**
      * Fetch N random problems.
      * If 'n' is not provided, it defaults to 5.
