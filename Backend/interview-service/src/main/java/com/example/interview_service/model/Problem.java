@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Problems")
+@Entity(name = "problems") // Table name should be lowercase as a best practice
 @Data
 public class Problem {
     @Id
@@ -30,16 +31,32 @@ public class Problem {
     private String constraints;
 
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Discussion> discussions;
+    private List<Discussion> discussions = new ArrayList<>(); // Initialize to prevent NullPointerException
 
-    public void addDiscussion(Discussion discussion){
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Solution> solutions = new ArrayList<>(); // Initialize to prevent NullPointerException
+
+    // Add discussion to the list
+    public void addDiscussion(Discussion discussion) {
         discussions.add(discussion);
         discussion.setProblem(this);
     }
 
-    public void removeDiscussion(Discussion discussion){
+    // Remove discussion from the list
+    public void removeDiscussion(Discussion discussion) {
         discussions.remove(discussion);
         discussion.setProblem(null);
     }
 
+    // Add solution to the list
+    public void addSolution(Solution solution) {
+        solutions.add(solution);
+        solution.setProblem(this);
+    }
+
+    // Remove solution from the list
+    public void removeSolution(Solution solution) {
+        solutions.remove(solution);
+        solution.setProblem(null);
+    }
 }
