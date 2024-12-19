@@ -1,48 +1,62 @@
 package com.example.interview_service.controller;
 
+
 import com.example.interview_service.dto.ProblemDto;
 import com.example.interview_service.service.IProblemService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("api/problems") // Base path for the endpoints
-
+@RequestMapping("/api/problems")
 public class ProblemController {
     private final IProblemService problemService;
 
-    public ProblemController(IProblemService problemService) {
+    public ProblemController(IProblemService problemService){
         this.problemService = problemService;
     }
-    /**
-     * Fetch N random problems.
-     * If 'n' is not provided, it defaults to 5.
-     *
-     * Example URL:
-     * GET /problems/random?n=5
-     */
-    @GetMapping("/random")
-    public CompletableFuture<List<ProblemDto>> getRandomProblems(
-            @RequestParam(defaultValue = "5") int n // Default to 5 if 'n' is not passed
-    ) {
-        return problemService.getRandomProblems(n);
+
+    @GetMapping
+    public ResponseEntity<List<ProblemDto>> getAllProblems(){
+        try {
+            List<ProblemDto> allProblems = problemService.getAllProblems();
+            return ResponseEntity.ok(allProblems);
+        }
+        catch (Exception e)
+        {
+            System.err.println("There was an error in the server" + ": error" + e);
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 
-    /**
-     * Fetch N problems filtered by topics.
-     * If 'topics' is not provided, it can be handled appropriately in the service.
-     *
-     * Example URL:
-     * GET /problems/topics?n=3&topics=math,arrays
-     */
-    @GetMapping("/topics")
-    public CompletableFuture<List<ProblemDto>> getProblemsByTopics(
-            @RequestParam(defaultValue = "5") int n, // Default to 5 if 'n' is not passed
-            @RequestParam List<String> topics       // List of topics as query parameter
-    ) {
-        return problemService.getProblemsByTopics(n, topics);
+    @GetMapping
+
+    public ResponseEntity<List<ProblemDto>> getNProblems(@RequestBody int n){
+        try {
+            List<ProblemDto> allProblems = problemService.getNProblems(n);
+            return ResponseEntity.ok(allProblems);
+        }
+        catch(Exception e)
+        {
+            System.err.println("There was an error in the server" + ": error" + e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        }
+        }
+    public ResponseEntity<List<ProblemDto>> getNProblemsWithTopics(@RequestBody int n, @RequestBody List<String> topics){
+        try {
+            List<ProblemDto> allProblems = problemService.getProblemsByTopics(topics, n);
+            return ResponseEntity.ok(allProblems);
+        }
+        catch(Exception e)
+        {
+            System.err.println("There was an error in the server" + ": error" + e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
+
 }

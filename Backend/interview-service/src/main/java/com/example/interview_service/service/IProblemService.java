@@ -1,15 +1,16 @@
 package com.example.interview_service.service;
 
 import com.example.interview_service.dto.ProblemDto;
-import com.example.interview_service.model.Problem;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
+@Service
 public interface IProblemService {
-    public CompletableFuture<List<ProblemDto>> getRandomProblems(int n);
+    public List<ProblemDto> getAllProblems();
+    public List<ProblemDto> getProblemsByTopics(List<String> topic, int n);
 
-    public CompletableFuture<List<ProblemDto>> getProblemsByTopics(int n, List<String> topics);
+    public List<ProblemDto> getNProblems(int n);
 
-    public CompletableFuture<List<Problem>> getAllProblems();
+
 }
