@@ -2,23 +2,24 @@ package com.example.interview_service.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.util.UUID;
-
+@Data
 public class SolutionDto {
 
         @NotNull
-
+        @Size(min = 1, max = 255, message = "Author name must be between 1 and 255 characters")
         private String author;
 
         @NotNull
+        @Size(min = 1, message = "Content must not be empty")
         private String content;
 
         @NotNull
         private UUID problemId;
 
-        public SolutionDto(){
-            // No args constructor
+        public SolutionDto() {
         }
 
         public SolutionDto(UUID problemId, String content, String author){

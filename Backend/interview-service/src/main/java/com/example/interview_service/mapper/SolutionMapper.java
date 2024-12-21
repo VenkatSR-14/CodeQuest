@@ -4,16 +4,13 @@ import com.example.interview_service.dto.SolutionDto;
 import com.example.interview_service.model.Problem;
 import com.example.interview_service.model.Solution;
 import com.example.interview_service.repository.ProblemRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 
+@Component
 public class SolutionMapper {
-    private final ProblemRepository problemRepository;
-
-    public SolutionMapper(ProblemRepository problemRepository) {
-        this.problemRepository = problemRepository;
-    }
 
     public SolutionDto toDto(Solution solution) {
         if (solution == null) {
@@ -26,16 +23,10 @@ public class SolutionMapper {
         );
     }
 
-    public Solution toEntity(SolutionDto solutionDto) {
-        if (solutionDto == null) {
-            return null;
+    public Solution toEntity(SolutionDto solutionDto, Problem problem) {
+        if (solutionDto == null || problem == null) {
+            throw new IllegalArgumentException("SolutionDto or Problem cannot be null");
         }
-        UUID problemId = solutionDto.getProblemId();
-
-        // Use problemRepository here
-        Problem problem = problemRepository.findById(problemId)
-                .orElseThrow(() -> new IllegalArgumentException("Problem not found with id: " + problemId));
-
         return new Solution(
                 null, // Assuming ID is auto-generated
                 solutionDto.getAuthor(),

@@ -1,18 +1,12 @@
 package com.example.interview_service.mapper;
+
 import com.example.interview_service.dto.DiscussionDto;
 import com.example.interview_service.model.Discussion;
 import com.example.interview_service.model.Problem;
-import com.example.interview_service.repository.ProblemRepository;
+import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
+@Component
 public class DiscussionMapper {
-
-    private final ProblemRepository problemRepository;
-
-    public DiscussionMapper(ProblemRepository problemRepository) {
-        this.problemRepository = problemRepository;
-    }
 
     public DiscussionDto toDto(Discussion discussion) {
         if (discussion == null) {
@@ -25,15 +19,10 @@ public class DiscussionMapper {
         );
     }
 
-    public Discussion toEntity(DiscussionDto discussionDto) {
-        if (discussionDto == null) {
-            return null;
+    public Discussion toEntity(DiscussionDto discussionDto, Problem problem) {
+        if (discussionDto == null || problem == null) {
+            throw new IllegalArgumentException("DiscussionDto or Problem cannot be null");
         }
-        UUID problemId = discussionDto.getProblemId();
-
-        // Use problemRepository here
-        Problem problem = problemRepository.findById(problemId)
-                .orElseThrow(() -> new IllegalArgumentException("Problem not found with id: " + problemId));
 
         return new Discussion(
                 null, // Assuming ID is auto-generated

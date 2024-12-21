@@ -13,59 +13,74 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class SolutionService implements ISolutionService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SolutionService.class);
+
     private final ProblemRepository problemRepository;
     private final SolutionRepository solutionRepository;
     private final SolutionMapper solutionMapper;
 
-    public SolutionService(ProblemRepository problemRepository, SolutionRepository solutionRepository, SolutionMapper solutionMapper){
-        this.solutionMapper = solutionMapper;
-        this.solutionRepository  = solutionRepository;
+    public SolutionService(ProblemRepository problemRepository,
+                           SolutionRepository solutionRepository,
+                           SolutionMapper solutionMapper) {
         this.problemRepository = problemRepository;
+        this.solutionRepository = solutionRepository;
+        this.solutionMapper = solutionMapper;
     }
-    public SolutionDto insertSolutionForProblem(UUID problemId, SolutionDto solutionDto){
+
+    @Transactional
+    public SolutionDto insertSolutionForProblem(UUID problemId, SolutionDto solutionDto) {
         try {
             Problem problem = problemRepository.findById(problemId)
-                    .orElseThrow(() -> new IllegalArgumentException("There was no problem found with id:" + problemId));
-            solutionDto.setProblemId(problemId);
-            Solution solution = solutionMapper.toEntity(solutionDto);
+                    .orElseThrow(() -> new IllegalArgumentException("Problem not found with ID: " + problemId));
+            Solution solution = solutionMapper.toEntity(solutionDto, problem);
             solution = solutionRepository.save(solution);
             return solutionMapper.toDto(solution);
-        }
-        catch(Exception e){
-            System.err.println("There was an error in performing insertion of solution" + e);
-            return new SolutionDto();
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Invalid input: {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error during solution insertion", e);
+            throw new RuntimeException("Failed to insert solution", e);
         }
     }
 
-    public String deleteSolutionForProblem(UUID solutionId){
+    @Transactional
+    public String deleteSolutionForProblem(UUID solutionId) {
         try {
-            Solution solution = solutionRepository.findById(solutionId).orElseThrow(
-                    () -> new IllegalArgumentException("There was a problem in fetching solution with id:" + solutionId)
-            );
+            Solution solution = solutionRepository.findById(solutionId)
+                    .orElseThrow(() -> new IllegalArgumentException("Solution not found with ID: " + solutionId));
             solutionRepository.delete(solution);
             return "Delete successful";
-        }
-        catch(Exception e){
-            System.err.println("There was an error in performing deletion of solution" + e);
-            return "Deletion failed";
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Error during solution deletion: {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error during solution deletion", e);
+            throw new RuntimeException("Failed to delete solution", e);
         }
     }
 
-    public SolutionDto updateSolutionForProblem(UUID discussionId, String content)
-    {
-        try{
-            Solution solution = solutionRepository.findById(discussionId)
-                    .orElseThrow(() -> new IllegalArgumentException("Discussion with Id:" + discussionId + " Not found"));
-
+    @Transactional
+    public SolutionDto updateSolutionForProblem(UUID solutionId, String content) {
+        try {
+            Solution solution = solutionRepository.findById(solutionId)
+                    .orElseThrow(() -> new IllegalArgumentException("Solution not found with ID: " + solutionId));
             solution.setContent(content);
             solution = solutionRepository.save(solution);
             return solutionMapper.toDto(solution);
-        }
-        catch(Exception e){
-            System.err.println("There was an excpetion in handling the update of discussion");
-            return new SolutionDto();
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Error during solution update: {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error during solution update", e);
+            throw new RuntimeException("Failed to update solution", e);
         }
     }
 }

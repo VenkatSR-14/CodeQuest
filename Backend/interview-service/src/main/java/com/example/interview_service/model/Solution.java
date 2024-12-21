@@ -2,35 +2,38 @@ package com.example.interview_service.model;
 
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.UUID;
 
 @Entity(name = "solutions")
+@EqualsAndHashCode(of = "id")
+@ToString
 public class Solution {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String author;
 
     @ManyToOne
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
-    public Solution(){
-        //No args constructor
+    public Solution() {
     }
 
-    public Solution(UUID id, String author, String content, Problem problem){
-        this.problem = problem;
+    public Solution(UUID id, String author, String content, Problem problem) {
+        this.id = id;
         this.author = author;
         this.content = content;
-        this.id = id;
+        this.problem = problem;
     }
 
     // Getters and setters
