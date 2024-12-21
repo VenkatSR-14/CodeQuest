@@ -1,21 +1,18 @@
 package com.example.interview_service.service.Impl;
 
-import com.example.interview_service.dto.DiscussionDto;
 import com.example.interview_service.dto.SolutionDto;
 import com.example.interview_service.mapper.SolutionMapper;
-import com.example.interview_service.model.Discussion;
 import com.example.interview_service.model.Problem;
 import com.example.interview_service.model.Solution;
 import com.example.interview_service.repository.ProblemRepository;
 import com.example.interview_service.repository.SolutionRepository;
 import com.example.interview_service.service.ISolutionService;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class SolutionService implements ISolutionService {
@@ -34,6 +31,7 @@ public class SolutionService implements ISolutionService {
         this.solutionMapper = solutionMapper;
     }
 
+    @Override
     @Transactional
     public SolutionDto insertSolutionForProblem(UUID problemId, SolutionDto solutionDto) {
         try {
@@ -51,6 +49,7 @@ public class SolutionService implements ISolutionService {
         }
     }
 
+    @Override
     @Transactional
     public String deleteSolutionForProblem(UUID solutionId) {
         try {
@@ -67,6 +66,7 @@ public class SolutionService implements ISolutionService {
         }
     }
 
+    @Override
     @Transactional
     public SolutionDto updateSolutionForProblem(UUID solutionId, String content) {
         try {

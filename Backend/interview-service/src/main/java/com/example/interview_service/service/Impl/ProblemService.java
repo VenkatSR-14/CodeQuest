@@ -14,30 +14,32 @@ import java.util.stream.Collectors;
 public class ProblemService implements IProblemService {
 
     private final ProblemRepository problemRepository;
-    private final ProblemMapper problemMapper;
 
-    public ProblemService(ProblemRepository problemRepository, ProblemMapper problemMapper){
+    public ProblemService(ProblemRepository problemRepository) {
         this.problemRepository = problemRepository;
-        this.problemMapper = problemMapper;
     }
-    public List<ProblemDto> getAllProblems(){
+
+    @Override
+    public List<ProblemDto> getAllProblems() {
         List<Problem> allProblems = problemRepository.findAll();
         return allProblems.stream()
-                .map(ProblemMapper::toDto)
+                .map(ProblemMapper::toDto) // Using static method for mapping
                 .collect(Collectors.toList());
     }
 
-    public List<ProblemDto> getNProblems(int n){
+    @Override
+    public List<ProblemDto> getNProblems(int n) {
         List<Problem> nProblems = problemRepository.findNProblems(n);
         return nProblems.stream()
-                .map(ProblemMapper::toDto)
+                .map(ProblemMapper::toDto) // Using static method for mapping
                 .collect(Collectors.toList());
     }
 
-    public List<ProblemDto> getProblemsByTopics(List<String> topics, int n){
+    @Override
+    public List<ProblemDto> getProblemsByTopics(List<String> topics, int n) {
         List<Problem> nProblemsPerTopics = problemRepository.findNProblemsByTopics(topics, n);
         return nProblemsPerTopics.stream()
-                .map(ProblemMapper::toDto)
+                .map(ProblemMapper::toDto) // Using static method for mapping
                 .collect(Collectors.toList());
     }
 }

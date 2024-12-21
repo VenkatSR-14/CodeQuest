@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -31,6 +32,8 @@ public class DiscussionService implements IDiscussionService {
         this.problemRepository = problemRepository;
     }
 
+    @Override
+    @Transactional
     public DiscussionDto insertDiscussionIntoProblem(UUID problemId, @Valid DiscussionDto discussionDto) {
         try {
             Problem problem = problemRepository.findById(problemId)
@@ -48,6 +51,8 @@ public class DiscussionService implements IDiscussionService {
         }
     }
 
+    @Override
+    @Transactional
     public String deleteDiscussionFromProblem(UUID discussionId) {
         try {
             Discussion discussion = discussionRepository.findById(discussionId)
@@ -63,6 +68,8 @@ public class DiscussionService implements IDiscussionService {
         }
     }
 
+    @Override
+    @Transactional
     public DiscussionDto updateDiscussionForProblem(UUID discussionId, String content) {
         try {
             Discussion discussion = discussionRepository.findById(discussionId)
