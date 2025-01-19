@@ -17,46 +17,43 @@ import java.util.List;
 public class ProblemController {
     private final IProblemService problemService;
 
-    public ProblemController(IProblemService problemService){
+    public ProblemController(IProblemService problemService) {
         this.problemService = problemService;
     }
 
+    // Endpoint to get all problems
     @GetMapping
-    public ResponseEntity<List<ProblemDto>> getAllProblems(){
+    public ResponseEntity<List<ProblemDto>> getAllProblems() {
         try {
             List<ProblemDto> allProblems = problemService.getAllProblems();
             return ResponseEntity.ok(allProblems);
-        }
-        catch (Exception e)
-        {
-            System.err.println("There was an error in the server" + ": error" + e);
+        } catch (Exception e) {
+            System.err.println("There was an error in the server: " + e.getMessage());
             return ResponseEntity.internalServerError().body(null);
         }
     }
 
-    @GetMapping
-
-    public ResponseEntity<List<ProblemDto>> getNProblems(@RequestBody int n){
+    // Endpoint to get 'n' problems
+    @GetMapping("/count")
+    public ResponseEntity<List<ProblemDto>> getNProblems(@RequestBody int n) {
         try {
-            List<ProblemDto> allProblems = problemService.getNProblems(n);
-            return ResponseEntity.ok(allProblems);
-        }
-        catch(Exception e)
-        {
-            System.err.println("There was an error in the server" + ": error" + e.getMessage());
-            return ResponseEntity.internalServerError().body(null);
-        }
-        }
-    public ResponseEntity<List<ProblemDto>> getNProblemsWithTopics(@RequestBody int n, @RequestBody List<String> topics){
-        try {
-            List<ProblemDto> allProblems = problemService.getProblemsByTopics(topics, n);
-            return ResponseEntity.ok(allProblems);
-        }
-        catch(Exception e)
-        {
-            System.err.println("There was an error in the server" + ": error" + e.getMessage());
+            List<ProblemDto> nProblems = problemService.getNProblems(n);
+            return ResponseEntity.ok(nProblems);
+        } catch (Exception e) {
+            System.err.println("There was an error in the server: " + e.getMessage());
             return ResponseEntity.internalServerError().body(null);
         }
     }
 
+    // Endpoint to get 'n' problems with specific topics
+    @GetMapping("/topics")
+    public ResponseEntity<List<ProblemDto>> getNProblemsWithTopics(@RequestBody int n, @RequestBody List<String> topics) {
+        try {
+            List<ProblemDto> problemsByTopics = problemService.getProblemsByTopics(topics, n);
+            return ResponseEntity.ok(problemsByTopics);
+        } catch (Exception e) {
+            System.err.println("There was an error in the server: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
 }
